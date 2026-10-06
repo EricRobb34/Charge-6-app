@@ -1,7 +1,7 @@
 # Step Alarm for Fitbit Charge 6 (iPhone)
 
 At **5:00 AM** your Charge 6 starts buzzing, and it doesn't stop until you've
-walked **100 steps**.
+walked **25 steps**.
 
 ## How it works
 
@@ -14,13 +14,13 @@ Two shortcuts share a small text file, `step-alarm.txt`, in iCloud Drive:
 | Shortcut | Started by | What it does |
 |----------|------------|--------------|
 | **Step Alarm** | An automation at 5:00 AM | Writes `ringing` to the file, then posts a notification every 5 seconds until the file says `done`. Gives up after 30 minutes as a safety stop. |
-| **Walk It Off** | You, once you're up and holding your phone | Checks Apple Health for steps taken since 5:00 AM every 5 seconds. At 100 or more, writes `done` to the file, which stops the buzzing. |
+| **Walk It Off** | You, once you're up and holding your phone | Checks Apple Health for steps taken since 5:00 AM every 5 seconds. At 25 or more, writes `done` to the file, which stops the buzzing. |
 
 ```
 5:00 AM  Step Alarm ──► buzz… buzz… buzz… (every 5 s)
              ▲ checks step-alarm.txt each time
 You get up, unlock the phone, run Walk It Off, start walking
-         Walk It Off ──► Health steps since 5:00 = 37… 82… 104 ✓
+         Walk It Off ──► Health steps since 5:00 = 8… 17… 26 ✓
                          writes "done" ──► Step Alarm stops
 ```
 
@@ -81,7 +81,7 @@ This is the step people miss.
    2. **If** *File* **contains** `done`
       - Inside the If branch: **Stop This Shortcut**
    3. **End If**. Leave the *Otherwise* branch empty, or delete it.
-   4. **Show Notification**: `Get up and walk 100 steps! 🚶`
+   4. **Show Notification**: `Get up and walk 25 steps! 🚶`
    5. **Wait**: `5` seconds
 
 When you're done, it should read:
@@ -94,7 +94,7 @@ Repeat 360 times
     If  File  contains "done"
         Stop This Shortcut
     End If
-    Show Notification "Get up and walk 100 steps! 🚶"
+    Show Notification "Get up and walk 25 steps! 🚶"
     Wait 5 seconds
 End Repeat
 ```
@@ -111,7 +111,7 @@ End Repeat
         action 1
       - Leave the limit off
    2. **Calculate Statistics**: **Sum** of *Health Samples*
-   3. **If** *Statistics* **is greater than or equal to** `100`
+   3. **If** *Statistics* **is greater than or equal to** `25`
       - Inside the If branch:
         1. **Text**: `done`
         2. **Save File**: *Text* → `step-alarm.txt`, *Ask Where to Save* off,
@@ -128,7 +128,7 @@ Date "5:00 AM"
 Repeat 240 times
     Find Health Samples  Steps  where Start Date is after Date
     Calculate Statistics  Sum of Health Samples
-    If  Statistics ≥ 100
+    If  Statistics ≥ 25
         Text "done"
         Save File  Text → step-alarm.txt  (overwrite)
         Show Notification "Alarm off. Good morning! ☀️"
@@ -159,12 +159,12 @@ Double Tap → Walk It Off**.
 2. Check that the Charge 6 starts buzzing on time **while the phone is
    locked**.
 3. Unlock the phone, run **Walk It Off** and walk around. The buzzing should
-   stop shortly after you pass 100 steps.
+   stop shortly after you pass 25 steps.
 4. Change the automation back to 5:00 AM.
 
 ## Things to know
 
-- **Expect a short delay after you reach 100 steps.** The iPhone writes steps
+- **Expect a short delay after you reach 25 steps.** The iPhone writes steps
   to Health in small batches, so the buzzing may continue for up to a minute
   or so. Keep walking.
 - **Stop the iPhone from locking mid-walk.** If *Walk It Off* stops, the alarm
@@ -174,7 +174,7 @@ Double Tap → Walk It Off**.
   wrist buzz. For wrist-only, go to **Settings → Notifications → Shortcuts** and
   turn off **Sounds**. That also silences the iPhone side of Hourly Buzz.
 - **The safety stop is 30 minutes.** To change it, adjust *Step Alarm*'s
-  Repeat count (12 = 1 minute). To require more or fewer steps, change the `100`
+  Repeat count (12 = 1 minute). To require more or fewer steps, change the `25`
   in *Walk It Off*.
 - **Changing the alarm time:** change the time in both the automation (Step 5)
   and the **Date** action in *Walk It Off* (Step 4, action 1).
