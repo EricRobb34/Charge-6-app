@@ -1,5 +1,8 @@
 # Hourly Buzz for Fitbit Charge 6 (iPhone)
 
+> **Also in this repo:** [Step Alarm](STEP_ALARM.md), a 5:00 AM alarm that
+> keeps buzzing until you've walked 100 steps.
+
 Every hour on the hour from **6 AM to 9 PM**, your Charge 6 buzzes once for
 each hour on a 12-hour clock:
 
